@@ -2,17 +2,20 @@ const express = require('express');
 const fs = require('fs');
 const path = require("path");
 const database = require("./db/db.json");
+const api = require('./routes/index.js');
 
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Get files in "public" folder
-app.use(express.static("public"));
 
 // Middleware for parsing JSON and urlencoded form data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use('/api', api);
+
+// Get files in "public" folder
+app.use(express.static("public"));
 
 // GET Route for homepage
 app.get('*', (req, res) =>
